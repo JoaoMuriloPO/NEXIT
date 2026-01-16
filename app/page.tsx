@@ -1,30 +1,63 @@
+"use client";
+
+import { useEffect } from "react";
+import { useSection } from "@/hooks/context/SectionContext";
+import { useInView } from "react-intersection-observer";
+
+// Importação dos componentes mantidos
 import { Hero } from "./home/components/Hero/Hero";
-import { TrustedBy } from "./home/components/TrustedBy/TrustedBy";
-import { ProjectsGrid } from "./home/components/ProjectsGrid/ProjectsGrid";
 import { Testimonials } from "./home/components/Testimonials/Testimonials";
 import { Footer } from "./home/components/Footer/Footer";
-// Garanta que o nome do arquivo seja exatamente ProcessSection.tsx dentro da pasta ProcessSection
-import { ProcessSection } from "@/components/ProcessSection/ProcessSection"; 
+import { ProcessSection } from "@/components/ProcessSection/ProcessSection";
+
+// Componente Wrapper para detectar a seção ativa
+const SectionWrapper = ({ id, type, children }: { id: string, type: 'hero' | 'process' | 'footer' | 'default', children: React.ReactNode }) => {
+  const { setActiveSection } = useSection();
+  const { ref, inView } = useInView({
+    threshold: 0.3, // Ativa quando 30% da seção entra na tela
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setActiveSection(type);
+    }
+  }, [inView, type, setActiveSection]);
+
+  return (
+    <section id={id} ref={ref} style={{ width: '100%' }}>
+      {children}
+    </section>
+  );
+};
 
 export default function Home() {
   return (
     <main style={{ 
-      maxWidth: '1400px', // Aumentado um pouco para dar mais fôlego aos 3 cards de projetos
+      maxWidth: '1400px', 
       margin: '0 auto', 
       display: 'flex', 
-      flexDirection: 'column', 
-      gap: '140px', 
+      flexDirection: 'column',
+      /* Removido o gap fixo para permitir transições de background fluidas */
     }}>
       
-      <Hero />
-      <TrustedBy />
-      <ProjectsGrid />
-      
-      {/* 6.4 Seção de Metodologia - O contraste branco entra aqui */}
-      <ProcessSection />
+      <SectionWrapper id="hero" type="hero">
+        <Hero />
+      </SectionWrapper>
 
-      <Testimonials />
-      <Footer />
+      {/* "TrustedBy" e "ProjectsGrid" removidos conforme solicitado */}
+
+      <SectionWrapper id="processo" type="process">
+        <ProcessSection />
+      </SectionWrapper>
+
+      <SectionWrapper id="depoimentos" type="default">
+        <Testimonials />
+      </SectionWrapper>
+
+      <SectionWrapper id="footer" type="footer">
+        <Footer />
+      </SectionWrapper>
+      
     </main>
   );
 }

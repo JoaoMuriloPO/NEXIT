@@ -1,44 +1,62 @@
-.container {
+.backgroundContainer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
-  overflow: hidden;
+  background-color: #000;
+  z-index: 0; /* Fica atrás de tudo */
   pointer-events: none;
-  background: transparent;
+  transition: background 1.2s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.orb {
+/* O Grid sutil baseado na sua imagem */
+.gridOverlay {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.15;
-  background: var(--accent-emerald);
-  animation: float 20s infinite alternate;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px; /* Ajuste o tamanho do quadrado aqui */
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
 }
 
-.orb2 {
+/* O Rastro de luz que segue o mouse */
+.mouseSpotlight {
   position: absolute;
-  top: 20%;
-  right: -100px;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.1;
-  background: #3b82f6; /* Azul sutil para profundidade */
-  animation: float 15s infinite alternate-reverse;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  transition: width 0.5s ease, height 0.5s ease;
 }
 
-@keyframes float {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(100px, 50px) scale(1.1);
-  }
+/* Estilos por Sessão */
+.heroGlow { background: radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.05) 0%, #000 50%); }
+
+.processGlow { 
+  background: #000;
+}
+.processGlow .gridOverlay {
+  background-size: 60px 60px; /* O Grid expande no processo */
+  opacity: 0.5;
+}
+
+/* Footer: 100% Transparente para o site */
+.footerGlow { 
+  background: transparent; 
+}
+.footerGlow .mouseSpotlight {
+  width: 800px; /* Brilho maior no rodapé */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+}
+
+.ambientNoise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg'); /* Textura leve */
+  pointer-events: none;
 }
