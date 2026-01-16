@@ -1,0 +1,114 @@
+.player {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 24px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 550px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.player:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(8px);
+}
+
+.progressContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- ESTILIZAÇÃO DO SABRE DE LUZ --- */
+.rangeInput {
+  -webkit-appearance: none; /* Remove o estilo padrão do Chrome */
+  appearance: none;
+  width: 100%;
+  height: 2px; /* Altura do trilho */
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+  /* O gradiente e filter que você colocou no TSX agora vão aparecer aqui! */
+}
+
+/* Bolinha (Thumb) - Onde o brilho acontece */
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  /* Múltiplas camadas de sombra para o efeito neon */
+  box-shadow: 
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px rgba(255, 255, 255, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+}
+
+/* Brilho ainda mais forte ao clicar/arrastar */
+.rangeInput:active::-webkit-slider-thumb {
+  transform: scale(1.4);
+  box-shadow: 
+    0 0 10px #fff,
+    0 0 25px #fff,
+    0 0 40px rgba(255, 255, 255, 0.8);
+}
+
+/* Suporte para Firefox */
+.rangeInput::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 15px #fff, 0 0 30px rgba(255, 255, 255, 0.6);
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.playButton {
+  color: #FFFFFF;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px #fff);
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  object-fit: cover;
+}
+
+.micIcon {
+  color: rgba(255, 255, 255, 0.2);
+}

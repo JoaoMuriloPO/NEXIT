@@ -1,0 +1,69 @@
+.button {
+  position: relative;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-standard);
+  overflow: hidden;
+  gap: 8px;
+}
+
+.primary {
+  background: var(--accent-emerald); /* Que agora é branco no seu global */
+  color: #000;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Brilho mais sutil */
+  border-radius: 4px; /* Mais quadrado como na referência */
+}
+
+.primary:hover {
+  /* Em vez de um brilho forte, vamos usar uma opacidade leve ou sombra maior */
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  filter: brightness(0.9); /* Dá um toque de clique ao escurecer levemente */
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+
+.glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.outline {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+
+.outline:hover {
+  background: var(--glass-bg);
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: 0.6s;
+}
+
+.button:hover .shine {
+  left: 100%;
+}

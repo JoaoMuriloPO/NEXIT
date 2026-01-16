@@ -1,0 +1,116 @@
+.container {
+  padding: 160px 24px;
+  background: transparent; 
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  margin-bottom: 100px;
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: -60px; 
+  perspective: 1200px;
+}
+
+.processCard {
+  /* PADRÃO AGORA: PRETO PROFUNDO */
+  background: #09090B; 
+  padding: 60px 40px;
+  color: #FFFFFF; 
+  width: 380px;
+  min-height: 520px;
+  border-radius: 40px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  transition: 
+    background 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s ease,
+    transform 0.7s cubic-bezier(0.2, 1, 0.3, 1),
+    box-shadow 0.5s ease;
+    
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* HOVER AGORA: ACENDE NO BRANCO */
+.processCard:hover {
+  background: #FFFFFF !important; 
+  color: #000000 !important; 
+  z-index: 10 !important;
+  transform: translateY(-40px) scale(1.05) rotate(0deg) !important;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Lógica da Pilha */
+.processCard:nth-child(1) { transform: rotate(-5deg) translateX(50px); z-index: 1; }
+.processCard:nth-child(2) { transform: translateY(-15px); z-index: 3; }
+.processCard:nth-child(3) { transform: rotate(5deg) translateX(-50px); z-index: 2; }
+
+/* Detalhes Técnicos */
+.techInfo {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.3; /* Mais discreto no modo escuro */
+  transition: all 0.5s ease;
+}
+
+.processCard:hover .techInfo {
+  opacity: 1;
+  color: #000000;
+}
+
+.stepNumber {
+  background: rgba(255, 255, 255, 0.1);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  transition: all 0.4s ease;
+}
+
+.processCard:hover .stepNumber {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000000;
+}
+
+.processCard h3 {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.processCard p {
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+.processCard:hover p {
+  opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+  .grid { flex-direction: column; gap: 30px; }
+  .processCard { width: 100%; transform: none !important; min-height: auto; }
+}

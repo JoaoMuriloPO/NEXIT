@@ -1,0 +1,64 @@
+.hero {
+  min-height: 100vh; /* Garante que a seção ocupe a tela toda */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px; /* Dá espaço para o "Role para descobrir" não atropelar os botões */
+}
+/* Deixa o título pesado (Extra Bold) como na referência */
+.hero h1 {
+  font-weight: 900 !important; 
+  font-size: clamp(2.5rem, 8vw, 5rem) !important; /* Aumenta a escala fluida */
+  letter-spacing: -3px !important; /* Letras mais juntas */
+  line-height: 0.95 !important; /* Compactação vertical para impacto */
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 32px; /* Respiro entre título e descrição */
+}
+/* Ajuste da nota de scroll para ficar bem lá embaixo */
+.scrollNote {
+  position: absolute;
+  bottom: 40px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  opacity: 0.5;
+}
+.badge {
+  background: #000000; /* Fundo preto sólido */
+  border: 1px solid #222222; /* Borda cinza escura sutil */
+  padding: 8px 16px;
+  border-radius: 4px; /* Formato retangular */
+  color: #ffffff; /* Texto branco puro */
+  font-size: 11px; /* Fonte menor e mais técnica */
+  font-family: 'Courier New', monospace; /* Estilo terminal */
+  font-weight: 700;
+  letter-spacing: 2px; /* Espaçamento entre letras */
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 580px; /* Um pouco mais estreito para criar mais linhas */
+  margin: 0 auto 48px auto; /* Centralizado com margem inferior maior */
+  opacity: 0.7; /* Texto secundário deve ser discreto */
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+}
