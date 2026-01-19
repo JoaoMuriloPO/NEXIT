@@ -1,48 +1,46 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
-import styles from './BackgroundGlow.module.css';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSection } from '@/hooks/context/SectionContext';
+import styles from './BackgroundGlow.module.css';
 
 export const BackgroundGlow = () => {
   const { activeSection } = useSection();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
-  // Segue a posição do mouse para o rastro de luz
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      // Converte a posição do mouse em porcentagem para o CSS
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      setMousePos({ x, y });
     };
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Define a intensidade do brilho baseado na sessão
-  const glowStyle = useMemo(() => {
+  const sectionClass = useMemo(() => {
     switch (activeSection) {
       case 'hero': return styles.heroGlow;
       case 'process': return styles.processGlow;
-      case 'footer': return styles.footerGlow; // Transparência total aqui
+      case 'footer': return styles.footerGlow;
       default: return styles.defaultGlow;
     }
   }, [activeSection]);
 
   return (
-    <div className={`${styles.backgroundContainer} ${glowStyle}`}>
-      {/* Camada 01: O Grid Quadriculado Fixo */}
+    <div 
+      className={`${styles.backgroundContainer} ${sectionClass}`}
+      style={{
+        '--mouse-x': `${mousePos.x}%`,
+        '--mouse-y': `${mousePos.y}%`,
+      } as React.CSSProperties}
+    >
       <div className={styles.gridOverlay} />
-      
-      {/* Camada 02: O Spotlight Reativo (Mouse) */}
-      <div 
-        className={styles.mouseSpotlight} 
-        style={{ 
-          left: `${mousePos.x}px`, 
-          top: `${mousePos.y}px` 
-        }} 
-      />
-      
-      {/* Camada 03: Ambiência de Profundidade */}
       <div className={styles.ambientNoise} />
+      {/* Luz volumétrica principal */}
+      <div className={styles.volumetricLight} />
     </div>
   );
 };

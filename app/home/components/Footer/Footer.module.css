@@ -4,8 +4,9 @@
   background: transparent; 
   padding: 60px 24px 30px;
   overflow: hidden;
+  margin-top: 15vh;
   /* Uma linha bem sutil para marcar o início do footer sem bloquear o fundo */
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  /* border-top: 1px solid rgba(255, 255, 255, 0.05); */
 }
 
 .container {

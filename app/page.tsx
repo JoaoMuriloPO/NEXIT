@@ -4,23 +4,18 @@ import { useEffect } from "react";
 import { useSection } from "@/hooks/context/SectionContext";
 import { useInView } from "react-intersection-observer";
 
-// Importação dos componentes mantidos
+// Importações mantidas
 import { Hero } from "./home/components/Hero/Hero";
 import { Testimonials } from "./home/components/Testimonials/Testimonials";
 import { Footer } from "./home/components/Footer/Footer";
 import { ProcessSection } from "@/components/ProcessSection/ProcessSection";
 
-// Componente Wrapper para detectar a seção ativa
-const SectionWrapper = ({ id, type, children }: { id: string, type: 'hero' | 'process' | 'footer' | 'default', children: React.ReactNode }) => {
+const SectionWrapper = ({ id, type, children }: { id: string, type: any, children: React.ReactNode }) => {
   const { setActiveSection } = useSection();
-  const { ref, inView } = useInView({
-    threshold: 0.3, // Ativa quando 30% da seção entra na tela
-  });
+  const { ref, inView } = useInView({ threshold: 0.3 });
 
   useEffect(() => {
-    if (inView) {
-      setActiveSection(type);
-    }
+    if (inView) setActiveSection(type);
   }, [inView, type, setActiveSection]);
 
   return (
@@ -37,23 +32,29 @@ export default function Home() {
       margin: '0 auto', 
       display: 'flex', 
       flexDirection: 'column',
-      /* Removido o gap fixo para permitir transições de background fluidas */
+      // Removido o gap global para controle individual de cada seção
     }}>
       
+      {/* 1. Hero: Impacto Inicial */}
       <SectionWrapper id="hero" type="hero">
         <Hero />
       </SectionWrapper>
 
-      {/* "TrustedBy" e "ProjectsGrid" removidos conforme solicitado */}
-
+      {/* 2. Processo: A nova joia da coroa (Etapa 3 vindo aí) */}
       <SectionWrapper id="processo" type="process">
-        <ProcessSection />
+        <div style={{ padding: '120px 0' }}> {/* Espaçamento interno para respiração */}
+          <ProcessSection />
+        </div>
       </SectionWrapper>
 
+      {/* 3. Depoimentos: Prova Social Técnica */}
       <SectionWrapper id="depoimentos" type="default">
-        <Testimonials />
+        <div style={{ padding: '100px 0' }}>
+          <Testimonials />
+        </div>
       </SectionWrapper>
 
+      {/* 4. Footer: O fechamento perfeito e transparente */}
       <SectionWrapper id="footer" type="footer">
         <Footer />
       </SectionWrapper>

@@ -24,6 +24,9 @@
   letter-spacing: 4px;
   opacity: 0.5;
 }
+.hero p{
+  text-align: center;
+}
 .badge {
   background: #000000; /* Fundo preto sólido */
   border: 1px solid #222222; /* Borda cinza escura sutil */

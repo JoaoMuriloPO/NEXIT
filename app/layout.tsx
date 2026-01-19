@@ -17,13 +17,9 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        {/* O Provider deve envolver TUDO que precisa saber em qual sessão o usuário está */}
         <SectionProvider>
-          {/* O BackgroundGlow agora poderá "ouvir" a sessão ativa no 1.2 */}
           <BackgroundGlow />
-          
-          {/* Navbar comentada conforme seu plano de limpeza */}
-          {/* <Navbar />  */}
+        
 
           <div style={{ position: "relative", zIndex: 1 }}>
             {children}

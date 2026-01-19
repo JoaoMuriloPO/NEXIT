@@ -1,62 +1,86 @@
 .backgroundContainer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background-color: #000;
-  z-index: 0; /* Fica atrás de tudo */
+  z-index: 0;
   pointer-events: none;
-  transition: background 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  transition: background 2s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
-/* O Grid sutil baseado na sua imagem */
+/* Camada de Luz Volumétrica (Floating Light) */
+.volumetricLight {
+  position: absolute;
+  width: 140vw;
+  height: 140vh;
+  top: -20vh;
+  left: -20vw;
+  /* A luz segue uma posição baseada na sessão, mas com um "delay" orgânico */
+  background: radial-gradient(
+    circle at var(--light-x, 20%) var(--light-y, 20%), 
+    rgba(255, 255, 255, 0.07) 0%, 
+    rgba(255, 255, 255, 0.02) 30%, 
+    transparent 60%
+  );
+  filter: blur(100px); /* O "charme" do Highpixel */
+  transition: all 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+/* GRID REATIVO: Ele só acende onde o mouse passa */
 .gridOverlay {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px; /* Ajuste o tamanho do quadrado aqui */
-  mask-image: radial-gradient(circle at center, black, transparent 80%);
-}
-
-/* O Rastro de luz que segue o mouse */
-.mouseSpotlight {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 1;
-  transition: width 0.5s ease, height 0.5s ease;
-}
-
-/* Estilos por Sessão */
-.heroGlow { background: radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.05) 0%, #000 50%); }
-
-.processGlow { 
-  background: #000;
-}
-.processGlow .gridOverlay {
-  background-size: 60px 60px; /* O Grid expande no processo */
-  opacity: 0.5;
-}
-
-/* Footer: 100% Transparente para o site */
-.footerGlow { 
-  background: transparent; 
-}
-.footerGlow .mouseSpotlight {
-  width: 800px; /* Brilho maior no rodapé */
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  /* Máscara dinâmica: rastro de luz no grid baseado no mouse */
+  mask-image: radial-gradient(
+    circle at var(--mouse-x) var(--mouse-y), 
+    black 0%, 
+    rgba(0,0,0,0.4) 30%, 
+    transparent 70%
+  );
+  transition: background-size 1.5s ease;
+  z-index: 2;
 }
 
 .ambientNoise {
   position: absolute;
   inset: 0;
-  opacity: 0.02;
-  background-image: url('https://grainy-gradients.vercel.app/noise.svg'); /* Textura leve */
-  pointer-events: none;
+  opacity: 0.05;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  mix-blend-mode: overlay;
+  z-index: 3;
+}
+
+/* --- ESTADOS DE ATMOSFERA POR SESSÃO --- */
+
+.heroGlow {
+  --light-x: 15%;
+  --light-y: 15%;
+}
+
+.processGlow {
+  --light-x: 85%;
+  --light-y: 50%;
+}
+.processGlow .gridOverlay {
+  background-size: 70px 70px; /* Sensação de "entrar" na seção */
+}
+
+.footerGlow {
+  --light-x: 50%;
+  --light-y: 95%;
+  background-color: transparent !important;
+}
+.footerGlow .volumetricLight {
+  opacity: 0.5;
+  filter: blur(150px);
+}
+
+.defaultGlow {
+  --light-x: 50%;
+  --light-y: 50%;
 }
