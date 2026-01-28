@@ -9,13 +9,14 @@
   text-align: center; 
 }
 
+/* --- ESTRUTURA DO BARALHO (DESKTOP) --- */
 .fanContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   perspective: 2000px;
   height: 600px;
-  gap: -120px; /* Mantém a proximidade central que você ajustou */
+  gap: -120px;
 }
 
 .flipCard {
@@ -23,21 +24,19 @@
   height: 500px;
   background: transparent;
   cursor: pointer;
-  /* Posicionamento via variáveis do TSX */
-  transform: rotate(var(--rotation)) translateX(var(--offset));
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 1;
 }
 
 .cardInner {
   position: relative;
-  width: 100%;
+  width: 105%;
   height: 100%;
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-style: preserve-3d;
 }
 
-/* Interação de Hover: Sobe e prepara o Flip */
+/* Interação de Hover Desktop */
 .flipCard:hover {
   z-index: 50;
   transform: rotate(0deg) translateY(-80px) scale(1.1);
@@ -47,7 +46,7 @@
   transform: rotateY(180deg);
 }
 
-/* Base Comum para os dois lados do card - Consolidada */
+/* Lados do Card */
 .cardFront, .cardBack {
   position: absolute;
   width: 100%;
@@ -70,11 +69,10 @@
   animation: energyPulse 4s infinite alternate ease-in-out;
 }
 
-/* Efeito de ativação na borda antes do flip completar */
 .flipCard:hover .cardFront {
   border-color: rgba(0, 255, 136, 0.6);
   box-shadow: 0 0 40px rgba(0, 255, 136, 0.2);
-  animation-play-state: paused; /* Pausa o pulso para focar no brilho do hover */
+  animation-play-state: paused;
 }
 
 .cardTopInfo {
@@ -129,7 +127,7 @@
 .hexCode { 
   font-size: 10px; 
   opacity: 0.5; 
-  color: rgba(0, 255, 136, 0.7); /* Cor sutil de sistema */
+  color: rgba(0, 255, 136, 0.7); 
 }
 
 /* --- VERSO (WHITE INTERFACE) --- */
@@ -187,30 +185,83 @@
   font-weight: bold; 
 }
 
-/* Animações de Ambiente */
+/* Animação de Pulso */
 @keyframes energyPulse {
-  0% {
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  }
-  100% {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
-  }
+  0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+  100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1); }
 }
 
-/* Responsividade Mobile */
+/* --- AJUSTE MOBILE: TIMELINE VERTICAL --- */
 @media (max-width: 1024px) {
-  .fanContainer { 
-    flex-direction: column; 
-    height: auto; 
-    gap: 40px; 
-    padding-top: 50px;
+  .container {
+    padding: 80px 20px;
   }
-  .flipCard { 
-    transform: none !important; 
-    width: 100%; 
-    max-width: 350px; 
-    height: 450px;
+
+  .header {
+    margin-bottom: 60px;
+    text-align: left;
+  }
+ .header h2 {
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.6rem !important; /* Força o tamanho para não quebrar feio */
+    display: inline-block;
+  }
+
+  .fanContainer {
+    flex-direction: column;
+    height: auto;
+    gap: 40px;
+    perspective: none;
+    padding: 0;
+  }
+
+  .flipCard {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    /* transform: none !important; */
+    cursor: default;
+  }
+
+  .cardInner {
+    transform: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transform-style: flat; /* Melhora performance mobile */
+  }
+
+  .cardFront, .cardBack {
+    position: relative;
+    width: 100%;
+    height: auto;
+    backface-visibility: visible;
+    transition: none;
+  }
+
+  .cardFront {
+    padding: 30px;
+    border-radius: 24px 24px 0 0; /* Conecta com o verso abaixo */
+    border-bottom: none;
+    animation: none; /* Remove animação pesada no mobile */
+  }
+
+  .frontTitle {
+    font-size: 1.8rem;
+    margin: 20px 0;
+  }
+
+  .cardBack {
+    transform: none !important;
+    padding: 30px;
+    border-radius: 0 0 24px 24px; /* Fecha o card embaixo */
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .description {
+    font-size: 1rem;
+    margin-bottom: 15px;
   }
 }
